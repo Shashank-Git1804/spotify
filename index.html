@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="nav flex justify-content align-item">
+        <img class="logoimg inverted" src="/spotify/logo.svg" alt="spotify Logo"></img>
+        <button class="home-logo">
+            <i class="fa-solid fa-house" id="house-logo"></i>
+        </button>
+        <div class=" form">
+            <div class="container1">
+                <i class="fa-solid fa-magnifying-glass" id="maglogo"></i>
+            </div>
+            <div class="container2">
+                <input type="text" placeholder="What do want to play?" class="search-bar">
+            </div>
+            <div class="container3">
+                <img class="lib inverted-half" src="/spotify/lib.svg" alt="">
+            </div>
+            
+        </div>
+        <div class="b flex justify-content align-item bAdd">
+            <button class="nav-button b1">Sign up</button>
+        </div>
+        
+        <div class="b b2Div">
+            <button class="nav-button b2">Log in</button>
+        </div>
+        
+    </div>
+    
+    <div class="first-div flex justify-content align-item">
+        <div class="left border-radius ">
+            <header class="header flex justify-content align-item">
+                <div class="head flex justify-content align-item">
+                    <button type="button" class=" iB1 flex"><img src="/spotify/library.svg" alt="library" class="library inverted-half">Your Library</button>
+                    <button type="button" class="plus flex justify-content align-item">+</button>
+                </div>    
+            </header>
+            <main>
+                
+                <ol class="ol">
+            
+                </ol>
+            </main>
+            <footer>
+                <div class="tags">
+                    <span>Legal</span>
+                    <span>Safety & Privacy Center</span>
+                    <span>Privacy Policy</span>
+                    <span> Cookies</span>
+                    <span> About Ads</span>
+                    <span> Accessivility</span>
+                    <!-- <a href="#">Cookies</a> -->
+                </div>
+                <div class="footButton">
+                    <button type="button" class=" fb flex align-item justify-content"><i class="fa-solid fa-globe inverted"></i><p>English</p></button>
+                </div>
+            </footer>
+        </div>
+        <div class="right border-radius">
+            <div class="mainy">
+                <div class="artist">
+                    <div class="headingAlbum flex">
+                        <h1>Popular Artist</h1>
+                        <a href="#" class="showmore">Show more</a>
+                    </div>
+                    <div class="artistCard flex">
+                        
+                    </div>
+                </div>
+                 <div class="player-bar flex justify-content align-item">
+                    <div class="songNmae flex align-item last">
+                        <!-- <h2>Song name</h2>
+                        <h4>Artist</h4> -->
+                        <div class="songlist songlist1 flex align-item">
+                            <i class="fa-solid fa-music music-logo"></i>
+                            <!-- <i class="fa-solid fa-music s-play"></i> -->
+                            <div class="contain songlist1">
+                                <h4 class="title">
+                                    <h2 style="color: #fff; font-size: xx-large;">Song name</h2>
+                                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                                </h4>
+                            </div>
+                        </div>
+                        <b class="bold">00:00/00:00</b>
+                    </div>
+                    <div class="playerController flex flex-direction-c">
+                        <div class="timer flex justify-content align-item flex-direction-c">
+                            <div class="seeek-bar"></div>
+                            <div class="seek-circle"></div>
+                        </div>
+                        <div class="control flex">
+                            <i class="fa-solid fa-backward-step control-previous"></i>
+                            <!-- <i class="fa-solid fa-backward"></i> -->
+                            <i class="fa-solid fa-play control-play"></i>
+                            <!-- <i class="fa-solid fa-forward"></i> -->
+                            <i class="fa-solid fa-forward-step control-next"></i>
+                            <div class="volume-container">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <input type="range" name="volume" id="volume" min="0" max="100" value="50">
+                            </div>
+                        </div>  
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script src="/spotify/script.js"></script>
+</body>
+</html>
