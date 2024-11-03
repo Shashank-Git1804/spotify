@@ -1,6 +1,3 @@
-
-console.log("hello");
-
 let playCondition=1;
 let ol = document.querySelector('ol');
 let currentAudio = null; // Variable to keep track of the currently playing audio
@@ -8,18 +5,16 @@ let currentSign=null;
 let songName= document.querySelector('.songNmae');
 let play_pause= document.querySelector('.fa-circle-play');
 let controlPlay= document.querySelector('.control-play');
-console.log(controlPlay.classList[1]);
 let first_song_contion=1;
 let music=[];
 let liClassList;
 let songsUL=document.querySelector('ol').getElementsByTagName('ul');
-// songsUL.innerHTML='';
-console.log(songsUL);
 let range=document.querySelector('#volume')
-console.log(range);
 let currFolder;
 let card=document.querySelectorAll('.artists')
-console.log(card);
+let hamBurger=document.querySelector('.hamBurger')
+let plus=document.querySelector('.plus')
+let left=document.querySelector('.left')
 let element;
 let li;
 let artists
@@ -38,7 +33,7 @@ function formatTime(seconds) {
 }
 
 async function songs(folder) {
-    let url = `http://127.0.0.1:3000/spotify/songs/${folder}/`;
+    let url = `http://127.0.0.1:3000/songs/${folder}/`;
     currFolder=folder;
     // songsUL.innerHTML ='';
     try {
@@ -54,10 +49,8 @@ async function songs(folder) {
         for (let index = 0; index < a.length; index++) {
             element = a[index];
             let href = element.href;
-            // console.log(element);
             if (href.endsWith('.mp3')) {
                 music.push(href);
-                console.log(element);
                 li = document.createElement('li'); 
                 li.innerHTML = 
                     `<div class="songlist songlist1 flex align-item">
@@ -71,18 +64,15 @@ async function songs(folder) {
                             </h6>
                         </div>
                     </div>`
-                    // currentAudio = new Audio(href);
-                    // currentAudio.play();
                 if (first_song_contion){
-                        // console.log('1');
                     currentAudio = new Audio(href);
                     currentAudio.pause();
                     songName.innerHTML=`<div class="songlist songlist1 flex align-item">
                             <i class="fa-solid fa-music s-play"></i>
                             <div class="contain songlist1">
                                 <h4 class="title">
-                                    <h2 style="color: #fff; font-size: xx-large;">${element.innerText}</h2>
-                                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                                    <h2 style="color: #fff;font-size:large;">${element.innerText}</h2>
+                                    <h4 style="color: #ffffff96;">Artist</h4>
                                 </h4>
                             </div>
                         </div>
@@ -96,39 +86,30 @@ async function songs(folder) {
                 ol.append(li);
                 let i_IN_li=li.getElementsByTagName('i');
                 liClassList=i_IN_li[0].classList;
-                // liClassList.add('fa-circle-play');
-                // liClassList.remove('fa-circle-pause');
                 li.addEventListener('click', (ev) => {
-                    // Pause the current audio if there is one playing
                     if (currentAudio) {
                         currentAudio.pause();
                         currentAudio.currentTime = 0; 
                     }
                     if(playCondition){
-                        liClassList.remove('fa-circle-play');
-                        liClassList.add('fa-circle-pause');
                         controlPlay.classList.remove('fa-play');
                         controlPlay.classList.add('fa-pause');
-                    }  
-                    // console.log(liClassList);
-                    // Create a new Audio instance for the clicked song
+                    }
                     currentAudio = new Audio(href);
-                    currentAudio.play(); // Play the new song
-                    // console.log('mellooo');
-                    player(element.innerHTML);
+                    currentAudio.play();
+                    let current_li_target=ev.currentTarget.querySelectorAll(".title")[0].innerText
+                    player(current_li_target);
                     timingsUpdate();
                     seeBarPosition();
                 });
                
                 controlPlay.addEventListener('click',(ev)=>{
                     if(currentAudio.paused){
-                        console.log('1')
                         currentAudio.play();
                         controlPlay.classList.remove('fa-play');
                         controlPlay.classList.add('fa-pause');
                     }
                     else if(currentAudio.played){
-                        console.log('0')
                         currentAudio.pause();
                         controlPlay.classList.remove('fa-pause');
                         controlPlay.classList.add('fa-play');
@@ -147,17 +128,14 @@ async function songs(folder) {
 
 async function main() {
     let getsongs = await songs("A.R.Rahman");
-    console.log(getsongs);
 
     document.querySelector('.control-next').addEventListener('click',()=>{
-        // console.log('next');
         currentAudio.pause();
         let index=music.indexOf(currentAudio.src)
         if((index+1) > length){
             currentAudio.pause();
             currentAudio = new Audio(music[index+1]);
             currentAudio.play();
-            // console.log(currentAudio)
         }
         if(index==music.length-1){
             currentAudio = new Audio(music[index]);
@@ -168,8 +146,8 @@ async function main() {
             <i class="fa-solid fa-music s-play"></i>
             <div class="contain songlist1">
                 <h4 class="title">
-                    <h2 style="color: #fff; font-size: xx-large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
-                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                    <h2 style="color: #fff;font-size:large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
+                    <h4 style="color: #ffffff96;">Artist</h4>
                 </h4>
             </div>
         </div>
@@ -179,15 +157,11 @@ async function main() {
     });
 
     document.querySelector('.control-previous').addEventListener('click',()=>{
-        // console.log('prev');
         currentAudio.pause();
-        // console.log(currentAudio.src)
         let index=music.indexOf(currentAudio.src);
-        // console.log(index);
         if((index-1) >= length){
             currentAudio = new Audio(music[index-1]);
             currentAudio.play();
-            // console.log(currentAudio)
         }
         if(index==0){
             currentAudio = new Audio(music[index]);
@@ -198,8 +172,8 @@ async function main() {
             <i class="fa-solid fa-music s-play"></i>
             <div class="contain songlist1">
                 <h4 class="title">
-                    <h2 style="color: #fff; font-size: xx-large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
-                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                    <h2 style="color: #fff;font-size:large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
+                    <h4 style="color: #ffffff96;">Artist</h4>
                 </h4>
             </div>
         </div>
@@ -211,7 +185,6 @@ async function main() {
     range.addEventListener('change',(e)=>{
         currentAudio.volume=(e.target.value)/100;
         if(currentAudio.volume==0){
-            // console.log(range.previousElementSibling.classList)
             range.previousElementSibling.classList.remove('fa-volume-high');
             range.previousElementSibling.classList.add('fa-volume-xmark');
         }
@@ -262,18 +235,33 @@ async function main() {
     populateCards();
     let artistCard=document.querySelector('.artistCard')
     Array.from(artistCard.children).forEach(e=>{
-        console.log('hi');
-        // console.log(e);
         e.addEventListener('click',async (event)=>{
             ol.innerHTML='';
-            console.log(songsUL.innerHTML);
             getsongs = await songs(`${event.currentTarget.dataset.folder}`);
         })
+    })
+
+    hamBurger.addEventListener('click',()=>{
+        if(left.style.left!='0px'){
+            left.style.left="0px"
+        }else{
+            left.style.left="-100%"
+        }
+    })
+
+    plus.addEventListener('click',()=>{
+        console.log(plus.style)
+        if(plus.style.transform=='true'){
+            left.style.left="-100%"
+        }
+    })
+    document.querySelector('.close').addEventListener("click",()=>{
+        left.style.left="-100%"
     })
 }
 
 async function populateCards(){
-    let url=`http://127.0.0.1:3000/spotify/songs/`
+    let url=`http://127.0.0.1:3000/songs/`
     let fetching = await fetch(url);
     let songParse = await fetching.text();
     let newDiv = document.createElement('div');
@@ -284,15 +272,13 @@ async function populateCards(){
             let hrefOfEachFolder=element.href;
             if(hrefOfEachFolder.includes('songs')){
                 let NameOfEachFolder=hrefOfEachFolder.split('/').slice(-2)[0];
-                // console.log(hrefOfEachFolder,NameOfEachFolder);
-                let fetchJson=await fetch(`http://127.0.0.1:3000/spotify/songs/${NameOfEachFolder}/info.json`);
+                let fetchJson=await fetch(`http://127.0.0.1:3000/songs/${NameOfEachFolder}/info.json`);
                 let parseJson=await fetchJson.json();
                 
                 let artistCard=document.querySelector('.artistCard')
-                console.log(artistCard.getElementsByClassName('.artists'));
                 artistCard.innerHTML=artistCard.innerHTML +`
                         <div class="artists a-num11 flex" data-folder="${parseJson.CardTitle}">
-                            <img src="http://127.0.0.1:3000/spotify/songs/${parseJson.CardTitle}/cover.jpg" alt="" class="artistImg margin-bottom">
+                            <img src="http://127.0.0.1:3000/songs/${parseJson.CardTitle}/cover.jpg" alt="" class="artistImg margin-bottom">
                             <h3>${parseJson.CardTitle}</h3>
                             <h5 class="margin-bottom">${parseJson.cardDescribtion}</h5>
                             <div class="play-Button flex justify-content align-item">
@@ -301,13 +287,14 @@ async function populateCards(){
                         </div>`
                 Array.from(artistCard.children).forEach(element => {
                     element.addEventListener('click',async (e)=>{
-                        console.dir(e.currentTarget)
                         ol.innerHTML='';
-                        console.log(e.currentTarget.dataset);
+                        first_song_contion=1;
+                        currentAudio.pause();
                         getsongs = await songs(`${e.currentTarget.dataset.folder}`);
+                        controlPlay.classList.add('fa-play');
+                        controlPlay.classList.remove('fa-pause');
                     });
                 });
-                console.log(card);
             }
         }
 }
@@ -317,8 +304,8 @@ function player(text){
                             <i class="fa-solid fa-music s-play"></i>
                             <div class="contain songlist1">
                                 <h4 class="title">
-                                    <h2 style="color: #fff; font-size: xx-large;">${text}</h2>
-                                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                                    <h2 style="color: #fff;font-size:large;">${text}</h2>
+                                    <h4 style="color: #ffffff96;">Artist</h4>
                                 </h4>
                             </div>
                         </div>
@@ -341,27 +328,25 @@ function seeBarPosition() {
 
 function nextSong() {
     document.querySelector('.control-next').addEventListener('click',()=>{
-        // console.log(music,currentAudio.src);
         currentAudio.pause();
         let index=music.indexOf(currentAudio.src.split('/').splice(-1)[0])
         if((index+1) > length){
             currentAudio = new Audio(music[index]);
             currentAudio.play();
-            // console.log(currentAudio)
         }
         
         songName.innerHTML=`<div class="songlist songlist1 flex align-item">
             <i class="fa-solid fa-music s-play"></i>
             <div class="contain songlist1">
                 <h4 class="title">
-                    <h2 style="color: #fff; font-size: xx-large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
-                    <h4 style="color: #ffffff96; font-size: medium;">Artist</h4>
+                    <h2 style="color: #fff; font-size:large;">${currentAudio.src.split('/').splice(-1)[0]}</h2>
+                    <h4 style="color: #ffffff96;">Artist</h4>
                 </h4>
             </div>
         </div>
         <b>00:00/00:00</b>`
-        liClassList.remove('fa-circle-play');
-        liClassList.add('fa-circle-pause');
+        // liClassList.remove('fa-circle-play');
+        // liClassList.add('fa-circle-pause');
         controlPlay.classList.remove('fa-play');
         controlPlay.classList.add('fa-pause');
     })
